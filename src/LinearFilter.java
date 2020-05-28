@@ -99,12 +99,14 @@ public class LinearFilter {
 	 
 	 public static float[][] parse(File file) throws FileNotFoundException {
 		 Scanner sc = new Scanner(new BufferedReader(new FileReader(file)));
-		 int size = Integer.parseInt(sc.nextLine());
-		 float[][] arr = new float[size][size];
+		 String[] index = sc.nextLine().split(" ");
+		 int width = Integer.parseInt(index[0]);
+		 int height = Integer.parseInt(index[1]);
+		 float[][] arr = new float[width][height];
 		 while(sc.hasNextLine()) {
-	         for (int i=0; i<size; i++) {
+	         for (int i=0; i<width; i++) {
 	            String[] line = sc.nextLine().split(" ");
-	            for (int j=0; j<line.length; j++) {
+	            for (int j=0; j<height; j++) {
 	               arr[i][j] = Float.parseFloat(line[j]);
 	            }
 	         }

@@ -202,7 +202,7 @@ public class test extends JFrame {
 						e1.printStackTrace();
 					}
 	
-		    		BufferedImage img2 = PointOperator.PointProcess(image, 1.5, 2.0, 2.5, 50, 100);
+		    		BufferedImage img2 = PointOperator.PointProcess(image, 0.0, 2.0, 0.0, 90, 140);
 		    		try {
 						IOPointOperator.displayPointOperator(image, img2);
 					} catch (ClassNotFoundException | InstantiationException | IllegalAccessException

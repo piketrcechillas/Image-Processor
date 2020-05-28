@@ -77,23 +77,23 @@ public class IOPointOperator {
          lb1.setIcon(icon);
          lb2.setIcon(icon2);
          
-         textField_1 = new JTextField("1.5");
+         textField_1 = new JTextField("0.0");
  	   	 textField_1.setColumns(5);
  	   	 textField_2 = new JTextField("2.0");
 	   	 textField_2.setColumns(5);
-	   	 textField_3 = new JTextField("2.5");
+	   	 textField_3 = new JTextField("0.0");
  	   	 textField_3.setColumns(5);
- 	   	 textField_4 = new JTextField("50");
+ 	   	 textField_4 = new JTextField("90");
 	   	 textField_4.setColumns(5);
-	   	 textField_5 = new JTextField("100");
+	   	 textField_5 = new JTextField("140");
  	   	 textField_5.setColumns(5);
  	   	 
  		
- 	   	 sliderAlpha = init(sliderAlpha, 15, 100);
+ 	   	 sliderAlpha = init(sliderAlpha, 0, 100);
  	   	 sliderBeta = init(sliderBeta, 20, 100);
- 	   	 sliderGamma = init(sliderGamma, 25, 100);
- 	   	 sliderA = init(sliderA, 50, 255);
- 	   	 sliderB = init(sliderB, 100, 255);
+ 	   	 sliderGamma = init(sliderGamma, 0, 100);
+ 	   	 sliderA = init(sliderA, 90, 255);
+ 	   	 sliderB = init(sliderB, 140, 255);
  	   	 addChangeListenerFloat(sliderAlpha, textField_1, img1);
  	   	 addChangeListenerFloat(sliderBeta, textField_2, img1);
  	   	 addChangeListenerFloat(sliderGamma, textField_3, img1);
@@ -367,7 +367,7 @@ public class IOPointOperator {
 					v = 0;
 				}
 			
-			datasetValue.add(u, v);
+			datasetValue.add(u, (int) Math.round(v));
  
          }
          
