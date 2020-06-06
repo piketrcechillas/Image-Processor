@@ -1,10 +1,13 @@
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -25,8 +28,11 @@ public class IOGeneral {
 	private static  JLabel lbHistogram2 =new JLabel();
 	private static BufferedImage hist1;
 	private static BufferedImage hist2;
+	private static BufferedImage result;
 	
 	public static void displayImage(BufferedImage img1, BufferedImage img2) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+			
+			result = img2;
 			String lookAndFeel = UIManager.getSystemLookAndFeelClassName();
 			UIManager.setLookAndFeel(lookAndFeel);
 			Font newLabelFont=new Font(lb1.getFont().getName(),Font.ITALIC+Font.BOLD,lb1.getFont().getSize());
@@ -46,9 +52,23 @@ public class IOGeneral {
 		    lbHistogram1.setIcon(iconHist1);
 		    lbHistogram2.setIcon(iconHist2);
 		    
-		    frame.setSize(img1.getWidth()*2+175, img1.getHeight()*2+175);
+		    frame.setSize(img1.getWidth()*2+250, img1.getHeight()*2+175);
 
-		
+			 JButton btnNewButton = new JButton("Refilter");
+		 	    
+		 	    btnNewButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						try {
+							ChooseModeNew newMode = new ChooseModeNew(result);
+							newMode.setVisible(true);
+						} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+								| UnsupportedLookAndFeelException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+		 	    });
+			
 		
 			GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 	        groupLayout.setHorizontalGroup(
@@ -67,6 +87,7 @@ public class IOGeneral {
 	        		     					.addGap(20)
 	        		     					.addComponent(lbHistogram2)
 	        		     					.addGap(0)))
+	        			.addComponent(btnNewButton)
 	        			.addPreferredGap(ComponentPlacement.UNRELATED)
 	        ));
 	        groupLayout.setVerticalGroup(
@@ -83,6 +104,7 @@ public class IOGeneral {
 			  					.addComponent(lbHistogram2).addGap(50)
 			  					.addGroup(groupLayout.createSequentialGroup() 
 	        				))
+	        			.addComponent(btnNewButton)
 	        			.addContainerGap(47, Short.MAX_VALUE))
 	        );
 	        frame.getContentPane().setLayout(groupLayout);

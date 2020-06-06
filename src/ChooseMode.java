@@ -25,7 +25,7 @@ public class ChooseMode extends JFrame {
 		System.out.println("Console!");
 		String lookAndFeel = UIManager.getSystemLookAndFeelClassName();
 		UIManager.setLookAndFeel(lookAndFeel);
-		setBounds(100, 100, 452, 367);
+		setBounds(100, 100, 452, 430);
 		JButton btnNewButton = new JButton("Point Operator");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -107,7 +107,7 @@ public class ChooseMode extends JFrame {
 		});
 		
 		JButton btnOpeningFilter = new JButton("Opening Filter");
-		btnLinearFilter.addActionListener(new ActionListener() {
+		btnOpeningFilter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					dispose();
@@ -123,7 +123,7 @@ public class ChooseMode extends JFrame {
 		});
 		
 		JButton btnClosingFilter = new JButton("Closing Filter");
-		btnLinearFilter.addActionListener(new ActionListener() {
+		btnClosingFilter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					dispose();
@@ -154,6 +154,39 @@ public class ChooseMode extends JFrame {
 			}
 		});
 		
+		JButton btnResize = new JButton("Resize Image");
+		btnResize.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					dispose();
+					test frame = new test(9);
+					frame.setVisible(true);
+					
+				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IOException
+						| UnsupportedLookAndFeelException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+		JButton btnCrop = new JButton("Crop Image");
+		btnCrop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					dispose();
+					test frame = new test(10);
+					frame.setVisible(true);
+					
+				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IOException
+						| UnsupportedLookAndFeelException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+		
 		JLabel lblChooseYourMode = DefaultComponentFactory.getInstance().createTitle("Choose Processing Mode");
 		lblChooseYourMode.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
@@ -166,6 +199,8 @@ public class ChooseMode extends JFrame {
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnCrop, GroupLayout.PREFERRED_SIZE, 268, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnResize, GroupLayout.PREFERRED_SIZE, 268, GroupLayout.PREFERRED_SIZE)
 								.addComponent(btnHistogramEqualization, GroupLayout.PREFERRED_SIZE, 268, GroupLayout.PREFERRED_SIZE)
 								.addComponent(btnClosingFilter, GroupLayout.PREFERRED_SIZE, 268, GroupLayout.PREFERRED_SIZE)
 								.addComponent(btnOpeningFilter, GroupLayout.PREFERRED_SIZE, 268, GroupLayout.PREFERRED_SIZE)
@@ -173,7 +208,8 @@ public class ChooseMode extends JFrame {
 								.addComponent(btnMaximumFilter, GroupLayout.PREFERRED_SIZE, 268, GroupLayout.PREFERRED_SIZE)
 								.addComponent(btnMedianFilter, GroupLayout.PREFERRED_SIZE, 268, GroupLayout.PREFERRED_SIZE)
 								.addComponent(btnLinearFilter, GroupLayout.PREFERRED_SIZE, 268, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 268, GroupLayout.PREFERRED_SIZE))
+								.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 268, GroupLayout.PREFERRED_SIZE)
+								)
 							.addGap(75))
 						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
 							.addComponent(lblChooseYourMode)
@@ -200,6 +236,10 @@ public class ChooseMode extends JFrame {
 					.addComponent(btnClosingFilter)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnHistogramEqualization)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnResize)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnCrop)
 					.addContainerGap(27, Short.MAX_VALUE))
 		);
 		getContentPane().setLayout(groupLayout);

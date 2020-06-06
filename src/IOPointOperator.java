@@ -1,4 +1,6 @@
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -7,6 +9,7 @@ import java.awt.image.Raster;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
@@ -49,6 +52,8 @@ public class IOPointOperator {
 	private static BufferedImage chartPanel;
 	private static BufferedImage hist1;
 	private static BufferedImage hist2;
+	
+	private static BufferedImage result;
 	/**
 	 * @wbp.nonvisual location=89,404
 	 */
@@ -60,11 +65,13 @@ public class IOPointOperator {
 	 * @wbp.parser.entryPoint
 	  */
 	 public static void displayPointOperator(BufferedImage img1, BufferedImage img2) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+		 
+		 result = img2;
 		 String lookAndFeel = UIManager.getSystemLookAndFeelClassName();
 			UIManager.setLookAndFeel(lookAndFeel);
          ImageIcon icon=new ImageIcon(img1);
          ImageIcon icon2=new ImageIcon(img2);
-         frame.setSize(img1.getWidth()*3+175, img1.getHeight()*2+200);     
+         frame.setSize(img1.getWidth()*3+250, img1.getHeight()*2+200);     
 
          
          Font newLabelFont=new Font(lb1.getFont().getName(),Font.ITALIC+Font.BOLD,lb1.getFont().getSize());
@@ -109,8 +116,20 @@ public class IOPointOperator {
  	    ImageIcon iconHist2  = new ImageIcon(hist2);
  	    lbHistogram1.setIcon(iconHist1);
  	    lbHistogram2.setIcon(iconHist2);
- 	   
- 	   
+ 	    JButton btnNewButton = new JButton("Refilter");
+ 	    
+ 	    btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ChooseModeNew newMode = new ChooseModeNew(result);
+					newMode.setVisible(true);
+				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+						| UnsupportedLookAndFeelException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+ 	    });
  	   
          JLabel lb3 =new JLabel();
          lb3.setText("α");
@@ -171,6 +190,7 @@ public class IOPointOperator {
          				.addComponent(lb5)
          				.addComponent(lb6)
          				.addComponent(lb7))
+         			.addComponent(btnNewButton)
          			.addContainerGap(228, Short.MAX_VALUE))
          );
          groupLayout.setVerticalGroup(
@@ -182,12 +202,11 @@ public class IOPointOperator {
          				.addComponent(lb2)
          				.addComponent(lbChart).addGap(50)
              			)
-         			
          			.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
  		         			.addComponent(lbHistogram1)
  		  					.addComponent(lbHistogram2).addGap(50)
  		  					.addGroup(groupLayout.createSequentialGroup()
-         			
+ 		  							.addComponent(btnNewButton)
          				.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
          					.addComponent(lb3)
          					.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -247,7 +266,7 @@ public class IOPointOperator {
 	          public void stateChanged(ChangeEvent e) {
 	          	textField.setText(String.format("%.1f", slider.getValue()/10.0));
 	          	
-	        	BufferedImage result = PointOperator.PointProcess(img1, sliderAlpha.getValue()/10.0, sliderBeta.getValue()/10.0, sliderGamma.getValue()/10.0, sliderA.getValue(), sliderB.getValue());
+	        	result = PointOperator.PointProcess(img1, sliderAlpha.getValue()/10.0, sliderBeta.getValue()/10.0, sliderGamma.getValue()/10.0, sliderA.getValue(), sliderB.getValue());
 					ImageIcon iconUpdate = new ImageIcon(result);
 					lb2.setIcon(iconUpdate);
 					chartPanel = drawHistogram(img1);
@@ -274,7 +293,7 @@ public class IOPointOperator {
 	              double value = Double.parseDouble(typed);
 	              slider.setValue((int) Math.round(value));
 	          
-					BufferedImage result = PointOperator.PointProcess(img1, sliderAlpha.getValue()/10.0, sliderBeta.getValue()/10.0, sliderGamma.getValue()/10.0, sliderA.getValue(), sliderB.getValue());
+					result = PointOperator.PointProcess(img1, sliderAlpha.getValue()/10.0, sliderBeta.getValue()/10.0, sliderGamma.getValue()/10.0, sliderA.getValue(), sliderB.getValue());
 					ImageIcon iconUpdate = new ImageIcon(result);
 					lb2.setIcon(iconUpdate);
 					
@@ -294,7 +313,7 @@ public class IOPointOperator {
 	          public void stateChanged(ChangeEvent e) {
 	          	textField.setText(String.valueOf(slider.getValue()));
 	          	
-	        		BufferedImage result = PointOperator.PointProcess(img1, sliderAlpha.getValue()/10.0, sliderBeta.getValue()/10.0, sliderGamma.getValue()/10.0, sliderA.getValue(), sliderB.getValue());
+	        		result = PointOperator.PointProcess(img1, sliderAlpha.getValue()/10.0, sliderBeta.getValue()/10.0, sliderGamma.getValue()/10.0, sliderA.getValue(), sliderB.getValue());
 					ImageIcon iconUpdate = new ImageIcon(result);
 					lb2.setIcon(iconUpdate);
 					
@@ -321,7 +340,7 @@ public class IOPointOperator {
 	              int value = Integer.parseInt(typed);
 	              slider.setValue(value);
 	          
-					BufferedImage result = PointOperator.PointProcess(img1,sliderAlpha.getValue()/10.0, sliderBeta.getValue()/10.0, sliderGamma.getValue()/10.0, sliderA.getValue(), sliderB.getValue());
+					result = PointOperator.PointProcess(img1,sliderAlpha.getValue()/10.0, sliderBeta.getValue()/10.0, sliderGamma.getValue()/10.0, sliderA.getValue(), sliderB.getValue());
 					ImageIcon iconUpdate = new ImageIcon(result);
 	
 					lb2.setIcon(iconUpdate);

@@ -71,7 +71,7 @@ public class HistogramEqualization {
         long blueSum = 0;
  
 
-        float scale_factor = (float) (scale / (input.getWidth() * input.getHeight()));
+        float scale_factor = (float) ((scale-1) / (input.getWidth() * input.getHeight()-1));
  
         for(int i=0; i<redH.length; i++) {
             redSum += imageHist.get(0)[i];

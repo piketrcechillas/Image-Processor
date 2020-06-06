@@ -68,9 +68,9 @@ public class PointOperator {
 		 for(int i = 0; i < input.getWidth(); i++) {
 	            for(int j = 0; j < input.getHeight(); j++) {
 	            	
-	            		 Raster raster = input.getRaster();
+	            	Raster raster = input.getRaster();
 	            	 
-	            	  arr[i][j] = raster.getSample(i, j, 0);
+	            	arr[i][j] = raster.getSample(i, j, 0);
 	            }
 	        }
 			
@@ -78,20 +78,17 @@ public class PointOperator {
 	}
 	
 	private static BufferedImage rasterize(int width, int height, int[][] arr) {
-		int[] matrix = new int[width * height * 3];
-		 for(int i = 0; i < width; i++) {
-	            for(int j = 0; j < height; j++) {
-	            	 for (int band = 0; band < 3; band++)
-	                     matrix[((i * height) + j)*3 + band] = arr[i][j];
-	            }
+		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		for(int i = 0; i < width; i++) {
+	        for(int j = 0; j < height; j++) {
+	        	image.getRaster().setSample(i, j ,0, arr[i][j]);
+	        	image.getRaster().setSample(i, j ,1, arr[i][j]);
+	        	image.getRaster().setSample(i, j ,2, arr[i][j]);
 	      }
+		}
 		 
-		 BufferedImage image =
-			        new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-			    WritableRaster raster = (WritableRaster) image.getData();
-			    raster.setPixels(0, 0, width, height, matrix);
-			    image.setData(raster);
-			    return image;
+	return image;
+		
 	
 	}
 	

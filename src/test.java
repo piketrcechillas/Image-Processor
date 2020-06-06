@@ -1,7 +1,13 @@
+import codeResize.CropImage;
+import codeResize.ImagePanel;
+import codeResize.ImageResizer;
+import codeResize.simpleEdit;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -76,10 +82,14 @@ public class test extends JFrame {
 			btnNewButton.addActionListener(new MinimumFilterAL());
 		else if(index==6)
 			btnNewButton.addActionListener(new OpeningFilterAL());
-		else if(index==5)
+		else if(index==7)
 			btnNewButton.addActionListener(new ClosingFilterAL());
 		else if(index==8)
 			btnNewButton.addActionListener(new HistogramEQFilterAL());
+		else if(index==9)
+			btnNewButton.addActionListener(new ResizeAL());
+		else if(index==10)
+			btnNewButton.addActionListener(new CropAL());
 		
 
 		JButton btnBackToChoosing = new JButton("Back to Choosing Mode");
@@ -402,6 +412,65 @@ public class test extends JFrame {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
+		    	}
+		    	if (rVal == JFileChooser.CANCEL_OPTION) {
+		    	}
+		    }
+		  }
+	  
+	  class ResizeAL implements ActionListener  {
+		    public void actionPerformed(ActionEvent e) {
+		    	FileNameExtensionFilter imageFilter = new FileNameExtensionFilter(
+		    		    "Image files", ImageIO.getReaderFileSuffixes());
+		    	JFileChooser c = new JFileChooser("D:\\testFolder");
+		    	c.addChoosableFileFilter(imageFilter);
+		    	c.setAcceptAllFileFilterUsed(false);
+		    	int rVal = c.showOpenDialog(test.this);
+		    	if (rVal == JFileChooser.APPROVE_OPTION) {
+		    		
+		    		try {
+		    			dispose();
+						image = ImageIO.read(c.getSelectedFile());
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+	
+		    		BufferedImage img2 = null;
+					try {
+						img2 = ImageResizer.resize(image, 0.5);
+					} catch (IOException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
+		    		try {
+						IOManipulation.displayImage(image, img2);
+					} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+							| UnsupportedLookAndFeelException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+		    	}
+		    	if (rVal == JFileChooser.CANCEL_OPTION) {
+		    	}
+		    }
+		  }
+	  
+	  class CropAL implements ActionListener  {
+		    public void actionPerformed(ActionEvent e) {
+		    	FileNameExtensionFilter imageFilter = new FileNameExtensionFilter(
+		    		    "Image files", ImageIO.getReaderFileSuffixes());
+		    	JFileChooser c = new JFileChooser("D:\\testFolder");
+		    	c.addChoosableFileFilter(imageFilter);
+		    	c.setAcceptAllFileFilterUsed(false);
+		    	int rVal = c.showOpenDialog(test.this);
+		    	if (rVal == JFileChooser.APPROVE_OPTION) {
+		    		
+		    		dispose();
+					String file = c.getSelectedFile().getAbsolutePath();
+					
+				    new CropImage().start(file);
+
 		    	}
 		    	if (rVal == JFileChooser.CANCEL_OPTION) {
 		    	}

@@ -32,8 +32,12 @@ public class IONonlinearFilter {
 	private static BufferedImage hist1;
 	private static BufferedImage hist2;
 	
+	private static BufferedImage result;
+	
 	public static void displayImage(BufferedImage img1, BufferedImage img2, int index) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
-		 String lookAndFeel = UIManager.getSystemLookAndFeelClassName();
+		
+		result = img2;
+		String lookAndFeel = UIManager.getSystemLookAndFeelClassName();
 			UIManager.setLookAndFeel(lookAndFeel);
       ImageIcon icon=new ImageIcon(img1);
       ImageIcon icon2=new ImageIcon(img2);
@@ -52,7 +56,7 @@ public class IONonlinearFilter {
 	    lbHistogram1.setIcon(iconHist1);
 	    lbHistogram2.setIcon(iconHist2);
 	    
-	    frame.setSize(img1.getWidth()*2+175, img1.getHeight()*2+175);
+	    frame.setSize(img1.getWidth()*2+250, img1.getHeight()*2+175);
 	    
 	    textField = new JTextField();
 		textField.setColumns(10);
@@ -60,7 +64,22 @@ public class IONonlinearFilter {
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
 		
-		JButton btnFilterAgain = new JButton("Filter again");
+		 JButton btnNewButton = new JButton("Refilter");
+	 	    
+	 	    btnNewButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						ChooseModeNew newMode = new ChooseModeNew(result);
+						newMode.setVisible(true);
+					} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+							| UnsupportedLookAndFeelException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+	 	    });
+		
+		JButton btnFilterAgain = new JButton("Use different value");
 		btnFilterAgain.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String value1 =  textField.getText();
@@ -70,26 +89,25 @@ public class IONonlinearFilter {
 	              }
 				int r = Integer.parseInt(value1);
 				int l = Integer.parseInt(value2);
-				BufferedImage imgNew = null;
 				if(index == 3) {
-					imgNew = MedianFilter.MedianProcess(img1,r,l);
+					result = MedianFilter.MedianProcess(img1,r,l);
 				}
 				if(index == 4) {
-					imgNew = MaximumFilter.MaximumProcess(img1,r,l);
+					result = MaximumFilter.MaximumProcess(img1,r,l);
 				}
 				if(index == 5) {
-					imgNew = MinimumFilter.MinimumProcess(img1,r,l);
+					result = MinimumFilter.MinimumProcess(img1,r,l);
 				}
 				if(index == 6) {
-					imgNew = CombinedFilter.OpeningProcess(img1,r,l);
+					result = CombinedFilter.OpeningProcess(img1,r,l);
 				}
 				if(index == 7) {
-					imgNew = CombinedFilter.ClosingProcess(img1,r,l);
+					result = CombinedFilter.ClosingProcess(img1,r,l);
 				}
 				
-				ImageIcon imgUpdate = new ImageIcon(imgNew);
+				ImageIcon imgUpdate = new ImageIcon(result);
 				lb2.setIcon(imgUpdate);
-				ImageIcon iconHistNew = new ImageIcon(drawHistogramImage(imgNew, 2));
+				ImageIcon iconHistNew = new ImageIcon(drawHistogramImage(result, 2));
 				lbHistogram2.setIcon(iconHistNew);
 				frame.repaint();
 			}
@@ -117,6 +135,7 @@ public class IONonlinearFilter {
         						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         						.addComponent(btnFilterAgain, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        						.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         						)))
         			.addPreferredGap(ComponentPlacement.UNRELATED)
         ));
@@ -142,6 +161,8 @@ public class IONonlinearFilter {
         				.addGap(40)
         				.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
         						.addComponent(btnFilterAgain, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        				.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+        						.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         				))
         			.addContainerGap(47, Short.MAX_VALUE))
         );

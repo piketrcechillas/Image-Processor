@@ -11,6 +11,7 @@ public class MaximumFilter {
 		int[][] imgArray = getArray(img);
 		int[][] imgArray2 = new int[width][height];
 		
+		System.out.println("Maxfilter");
 		int r0 = (int) Math.floor(r/2);
 		int l0 = (int) Math.floor(l/2);
 		BufferedImage processedImage = new BufferedImage(width, height, img.getType());
@@ -32,10 +33,6 @@ public class MaximumFilter {
 					}
 				}
 				Collections.sort(arr);	
-				for(int m = 0; m < arr.size(); m++) {
-					System.out.print(arr.get(m) + " ");
-				}
-				System.out.println();
 				
 		        imgArray2[i][j] = Math.round(arr.get(arr.size() - 1));
 		            
